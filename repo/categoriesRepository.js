@@ -15,9 +15,16 @@ var modelCategories = function () {
     })
   }
 
+  getCategoryById = function(category_id, callback) {
+    categoryModel.findOne(function (err, category){
+      callback(err, category);
+    })
+  }
+
   return {
     getCategories : getCategories,
-    create : create
+    create : create,
+    getCategoryById : getCategoryById
   };
 
 }();

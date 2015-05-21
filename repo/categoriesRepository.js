@@ -1,7 +1,7 @@
 var mongoose = require('mongoose'),
     categoryModel = require('../models/model.categories');
 
-var modelCategories = function () {
+var CategoriesRepo = function () {
   getCategories = function (callback) {
     categoryModel.find(function (err, categories){
       callback(err, categories);
@@ -29,4 +29,4 @@ var modelCategories = function () {
 
 }();
 
-module.exports = modelCategories;
+module.exports = CategoriesRepo;

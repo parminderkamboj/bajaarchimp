@@ -1,5 +1,5 @@
 var should = require('should');
-    categoryRoute = require('../routes/categories.js'),
+    categoryRoute = require('../routes/categories'),
     request = require('supertest'),
     assert  = require('assert'),
     db = require('../database'),
@@ -51,6 +51,9 @@ describe('Category APIs', function(){
     });
   });
 
-
+  after(function(done){
+    db.close();
+    done();
+  });
 
 })

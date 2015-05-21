@@ -25,7 +25,7 @@ var database = function () {
             if (conn) {
                 conn.close(function () {
                     console.log('Mongoose default connection disconnected through app termination');
-                    process.exit(0);
+                  //  process.exit(0);
                 });
             }
         }

@@ -19,8 +19,7 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next){
   var category = {
-    categoryId : req.body.id,
-    categoryName : req.body.name,
+    name : req.body.name,
     imageUrl: req.body.imageUrl
   };
   categoriesRepo.create(category, function(err, storedCategory){
@@ -31,5 +30,29 @@ router.post('/', function(req, res, next){
     res.json(storedCategory);
   })
 })
+
+router.get('/:id', function(req, res, next){
+  categoriesRepo.getCategoryById(req.params.id, function(err, categories){
+    if(err) {
+      console.log(err.toString());
+      res.json(500, err);
+    } else {
+      res.json(categories);
+    }
+  })
+})
+// not able to test:: Need to fix
+//router.delete('/:id', function(req, res, next){
+//  categoriesRepo.deleteCategory(req.params.id, function(err){
+//    if(err) {
+//      console.log(err.toString());
+//      res.json(500, err);
+//    } else {
+//      res.json('"status": "deleted"');
+//    }
+//  })
+//})
+
+
 
 module.exports = router;

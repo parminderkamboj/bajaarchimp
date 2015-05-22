@@ -7,11 +7,14 @@ var mongoose    = require('mongoose'),
 var categoryModel = function() {
 
     var Category = Schema({
-        categoryId          : { type: String, required: true },
-        categoryName        : { type: String, required: true },
+        name        : { type: String, required: true, trim: true },
         // subCategory         : categorySchema,
-        imageUrl            : String
+        imageUrl    : { type: String, trim : true}
     });
+    Category.virtual('id').get(function() {
+        return this._id.toString();
+    });
+    
 
     return mongoose.model('category', Category, 'categories');
 

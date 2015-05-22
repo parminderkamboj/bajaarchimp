@@ -3,7 +3,7 @@ var mongoose = require('mongoose'),
 
 var CategoriesRepo = function () {
   getCategories = function (callback) {
-    categoryModel.find(function (err, categories){
+    categoryModel.find().select('_id name imageUrl').exec(function (err, categories){
       callback(err, categories);
     });
   }
@@ -15,16 +15,22 @@ var CategoriesRepo = function () {
     })
   }
 
-  getCategoryById = function(category_id, callback) {
-    categoryModel.findOne(function (err, category){
+  getCategoryById = function(id, callback) {
+    categoryModel.findById(id, '_id name imageUrl', function (err, category){
       callback(err, category);
     })
   }
 
+   
+  deleteCategory = function(id, callback) {
+    categoryModel.findById(id).remove().exec(callback);
+  };
+  
   return {
-    getCategories : getCategories,
-    create : create,
-    getCategoryById : getCategoryById
+    getCategories   : getCategories,
+    create          : create,
+    getCategoryById : getCategoryById,
+    deleteCategory  : deleteCategory  
   };
 
 }();

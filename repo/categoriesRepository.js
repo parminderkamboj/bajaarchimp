@@ -23,8 +23,15 @@ var CategoriesRepo = function () {
 
    
   deleteCategory = function(id, callback) {
-    categoryModel.findById(id).remove().exec(callback);
-  };
+    categoryModel.remove( {_id: id}, function(err, count) {
+        if(err) {
+            console.log('in delete:' + err);
+            callback(err, 0);
+            
+        }
+        callback(err, count);
+    });
+  }
   
   return {
     getCategories   : getCategories,

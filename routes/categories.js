@@ -22,7 +22,8 @@ router.post('/', function(req, res, next){
     name : req.body.name,
     imageUrl: req.body.imageUrl
   };
-  categoriesRepo.create(category, function(err, storedCategory){
+  
+    categoriesRepo.create(category, function(err, storedCategory){
     if(err) {
       res.json(err);
       return err;
@@ -37,21 +38,26 @@ router.get('/:id', function(req, res, next){
       console.log(err.toString());
       res.json(500, err);
     } else {
+          
       res.json(categories);
     }
   })
 })
+
 // not able to test:: Need to fix
-//router.delete('/:id', function(req, res, next){
-//  categoriesRepo.deleteCategory(req.params.id, function(err){
-//    if(err) {
-//      console.log(err.toString());
-//      res.json(500, err);
-//    } else {
-//      res.json('"status": "deleted"');
-//    }
-//  })
-//})
+router.delete('/:id', function(req, res, next){
+  categoriesRepo.deleteCategory(req.params.id, function(err, data){
+    if(err) {
+      console.log(err.toString());
+      res.status(500).json(err);
+    } else {
+      var dataObj = JSON.parse(data);    
+      console.log('in delete success: ' + data + ' count:'+ dataObj.n);     
+      var status = {status:dataObj.ok, count:dataObj.n};    
+      res.status(200).json(status);
+    }
+  })
+})
 
 
 

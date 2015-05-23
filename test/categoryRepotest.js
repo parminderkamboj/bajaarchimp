@@ -13,15 +13,15 @@ describe('Category APIs', function(){
     done();
   });
   var catId = new mongoose.Schema.ObjectId();   
-  var category = {id: catId, name:'test', imageUrl:'test.png'}; 
-  describe('categoryRep.create create users', function(){
-    it('should get create test users', function(done){
+  var category = {_id: '', name:'test', imageUrl:'test.png'}; 
+  describe('categoryRep.create find update delete categories', function(){
+    it('should create categories', function(done){
           
       categoryRepo.create(category, function(err, savedCategory){
         if (err) throw err;
         savedCategory.should.have.property('_id');
         savedCategory.name.should.be.equal(category.name);  
-        category.id = savedCategory._id;  
+        category._id = savedCategory._id.toString();  
         done();
       });
       
@@ -29,12 +29,11 @@ describe('Category APIs', function(){
     });
   })
   
-  describe('category repo get users', function(){
-    it('should get all users', function(done){
+  describe('category repo get categories', function(){
+    it('should get all categories', function(done){
       categoryRepo.getCategories(function(err, categories){
         if (err) throw err;
         categories[0].should.have.property('_id');
-        console.log(categories);  
         done();
       });
       
@@ -42,9 +41,11 @@ describe('Category APIs', function(){
     });
   })
   
-  describe('category repo getUsersById', function(){
+  
+  
+  describe('category repo getcategoriesById', function(){
     it('should get one user', function(done){
-      categoryRepo.getCategoryById(category.id.toString(), function(err, categoryFromDb){
+      categoryRepo.getCategoryById(category._id, function(err, categoryFromDb){
         if (err) throw err;
         categoryFromDb.should.have.property('_id');
         categoryFromDb.name.should.be.eql(category.name);
@@ -54,9 +55,26 @@ describe('Category APIs', function(){
           
     });
   })
+
+  describe('category repo updateCategory', function(){
+    it('should update one category', function(done){
+      category.name = "test2";
+      category.imageUrl = "test2.png";    
+      categoryRepo.updateCategory(category, function(err, categoryFromDb){
+        if (err) throw err;
+        console.log("in update cat" + categoryFromDb.name + ' ' + categoryFromDb.imageUrl);
+        categoryFromDb.should.have.property('_id');
+        categoryFromDb.name.should.be.eql(category.name);
+        categoryFromDb.imageUrl.should.be.eql(category.imageUrl);
+        done();
+      });
+      
+          
+    });
+  })
   
-  describe('category repo delete users', function(){
-    it('should get all users', function(done){
+  describe('category repo delete categories', function(){
+    it('should get categories', function(done){
       categoryRepo.deleteCategory(category.id, function(err){
         if (err) throw err;
         done();

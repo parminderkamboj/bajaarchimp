@@ -44,6 +44,22 @@ router.get('/:id', function(req, res, next){
   })
 })
 
+router.put('/', function(req, res, next){
+  var category = {
+    _id      : req.body._id,  
+    name     : req.body.name,
+    imageUrl : req.body.imageUrl
+  };
+  
+    categoriesRepo.updateCategory(category, function(err, storedCategory){
+    if(err) {
+      res.json(err);
+      return err;
+    }
+    res.json(storedCategory);
+  })
+})
+
 // not able to test:: Need to fix
 router.delete('/:id', function(req, res, next){
   categoriesRepo.deleteCategory(req.params.id, function(err, data){

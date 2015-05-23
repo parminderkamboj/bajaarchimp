@@ -28,7 +28,6 @@ describe('Category APIs', function(){
       .end(function(err, res){
         if(err) {throw error;}
         data._id = res.body._id;  
-        console.log('Data ' + res.body);  
         res.body.should.have.property('_id');
         res.body.should.have.property('name');
         done();
@@ -50,7 +49,8 @@ describe('Category APIs', function(){
           done();
         });
     });  
-    console.log("id : " + data._id);  
+
+    
     it('/categories/:id Should get id category by id', function(done){
       request(url).get('/categories/' + data._id)
         .end(function(err, res) {
@@ -70,6 +70,24 @@ describe('Category APIs', function(){
         });
     });  
     
+      
+    it('Should update category into db', function(done){
+
+      data.name = 'test2';
+      data.imageUrl = 'test2.png';    
+      request(url).put('/categories').send(data)
+      .end(function(err, res){
+        if(err) {throw error;}
+        data._id = res.body._id;  
+        res.body.should.have.property('_id');
+        res.body.should.have.property('name');
+        res.body.name.should.be.eql(data.name);
+        res.body.should.have.property('imageUrl');
+        res.body.imageUrl.should.be.eql(data.imageUrl);  
+        done();
+      });
+    });
+      
     it('Delete /categories/:id Should delete category ' + data._id , function(done){
       request(url).delete('/categories/' + data._id)
         .end(function(err, res) {

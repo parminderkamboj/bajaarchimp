@@ -9,7 +9,9 @@ var CategoriesRepo = function () {
   }
 
   create = function(category, callback) {
-    categoryDb = new categoryModel(category);
+    categoryDb = new categoryModel();
+      categoryDb.name = category.name;
+      categoryDb.imageUrl = category.imageUrl;
     categoryDb.save(function(err, storedCategory) {
       callback(err, storedCategory);
     })
@@ -23,13 +25,19 @@ var CategoriesRepo = function () {
 
    
   deleteCategory = function(id, callback) {
-    categoryModel.remove( {_id: id}, function(err, count) {
-        if(err) {
-            console.log('in delete:' + err);
-            callback(err, 0);
-            
-        }
-        callback(err, count);
+    categoryModel.remove( {_id: id}, function(err, result) {
+        
+        callback(err, result);
+    });
+  }
+  
+  updateCategory = function(newCategory, callback) {
+    categoryModel.findById(newCategory._id, function(err, catFromDb) {
+        if(err) {callback(err, null);}
+        catFromDb.name = newCategory.name;
+        catFromDb.imageUrl = newCategory.imageUrl;
+        catFromDb.save(callback);
+        
     });
   }
   
@@ -37,6 +45,7 @@ var CategoriesRepo = function () {
     getCategories   : getCategories,
     create          : create,
     getCategoryById : getCategoryById,
+    updateCategory  : updateCategory,  
     deleteCategory  : deleteCategory  
   };
 

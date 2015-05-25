@@ -1,5 +1,4 @@
 var should = require('should');
-    categoryRoute = require('../routes/categories'),
     request = require('supertest'),
     assert  = require('assert'),
     db = require('../database'),
@@ -14,7 +13,7 @@ describe('Category APIs', function(){
       };
   
   before(function(done){
-    db.init(config.databaseConfig, false);
+ //   db.init(config.databaseConfig, false);
     done();
   })
   describe('categories', function(){
@@ -108,7 +107,7 @@ describe('Category APIs', function(){
   });
 
   after(function(done){
-    db.close();
+ //   db.close();
     done();
   });
 

@@ -8,15 +8,14 @@ var categoryModel = function() {
 
     var Category = Schema({
         name        : { type: String, required: true, trim: true },
-        // subCategory         : categorySchema,
+ //       subCategory : { type:ObjectId, ref:'categories'},
         imageUrl    : { type: String, trim : true}
     });
     Category.virtual('id').get(function() {
         return this._id.toString();
     });
     
-
-    return mongoose.model('category', Category, 'categories');
+    return mongoose.model('category', Category);
 
 };
 

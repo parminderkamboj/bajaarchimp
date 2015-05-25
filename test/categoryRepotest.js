@@ -62,7 +62,6 @@ describe('Category APIs', function(){
       category.imageUrl = "test2.png";    
       categoryRepo.updateCategory(category, function(err, categoryFromDb){
         if (err) throw err;
-        console.log("in update cat" + categoryFromDb.name + ' ' + categoryFromDb.imageUrl);
         categoryFromDb.should.have.property('_id');
         categoryFromDb.name.should.be.eql(category.name);
         categoryFromDb.imageUrl.should.be.eql(category.imageUrl);
